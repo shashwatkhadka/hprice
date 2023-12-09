@@ -1,5 +1,7 @@
 import string
 import pandas as pd
+import matplotlib.pyplot as plt
+import seaborn as sns
 
 df = pd.read_excel('Data/DataSet.xlsx', sheet_name='FilteredData')
 
@@ -12,9 +14,22 @@ df.dropna(subset=['LA_N','RA_N','FACING_N'],inplace=True)
 #subset parameter allows us to specify multipe columns
 
 #data cleaned as of now, now visualisation
-print(df.info())
 #1. correlation matrix/heatmap
 #2. boxplot to visualise outliers
 #3. scatterplot, relation between price vs land area,roadsize,built year
 #4 time serises plot, to visualise the no of properties built per year
-#5.
+
+#correlation heatmap cannot be created without a correlation matrix
+cor_matrix=df[['LA_N','RA_N','BY_N','FACING_N','BEDROOM','BATHROOM','FLOOR','PRICE_N']].corr()
+
+#plt.figure(figsize=(8,6))
+#sns.heatmap(cor_matrix,annot=True,cmap='coolwarm',fmt='.2f',annot_kws={"size":10})
+#plt.title('Correlation Heatmap')
+#plt.show()
+
+plt.figure(figsize=(8,6))
+sns.countplot(df,x='BY_N',palette='viridis')
+plt.title('Houses Built per Year')
+plt.xlabel('Categories')
+plt.ylabel('Frequency')
+plt.show()
