@@ -2,6 +2,7 @@ import string
 import pandas as pd
 import matplotlib.pyplot as plt
 import seaborn as sns
+from sklearn.model_selection import train_test_split
 
 df = pd.read_excel('Data/DataSet.xlsx', sheet_name='FilteredData')
 
@@ -27,9 +28,17 @@ cor_matrix=df[['LA_N','RA_N','BY_N','FACING_N','BEDROOM','BATHROOM','FLOOR','PRI
 #plt.title('Correlation Heatmap')
 #plt.show()
 
-plt.figure(figsize=(8,6))
-sns.countplot(df,x='BY_N',palette='viridis')
-plt.title('Houses Built per Year')
-plt.xlabel('Categories')
-plt.ylabel('Frequency')
-plt.show()
+#plt.figure(figsize=(8,6))
+#sns.countplot(df,x='BY_N',palette='viridis')
+#plt.title('Houses Built per Year')
+#plt.xlabel('Categories')
+#plt.ylabel('Frequency')
+#plt.show()
+
+X=df[['LA_N','RA_N','BY_N','FACING_N','BEDROOM','BATHROOM','FLOOR']]
+Y=df[['PRICE_N']]
+
+X_train, X_test, Y_train, Y_test=train_test_split(X,Y,test_size=0.2,random_state=42)
+print(X.shape, X_train.shape, X_test.shape)
+
+#model training
