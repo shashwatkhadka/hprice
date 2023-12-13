@@ -63,13 +63,13 @@ for index,row in df.iterrows():
 
 direction_priority={
     'East':1,
-    'North':2,
-    'North-East':3,
-    'South-East':4,
-    'North-West':5,
-    'West':6,
-    'South-West':7,
-    'South':8
+    'North':1.1,
+    'North-East':1.1,
+    'South-East':2,
+    'North-West':2,
+    'West':2.1,
+    'South-West':3,
+    'South':3
 }
 df['FACING_N']=df['FACING'].map(direction_priority)
  
