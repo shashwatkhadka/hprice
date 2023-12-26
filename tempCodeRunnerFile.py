@@ -1,12 +1,29 @@
-def has_multiple_dots(cell):
-    return cell.count('.') > 1
 
-columns_to_process = ['LA_N', 'RA_N']
+import pandas as pd
+from openpyxl import load_workbook
 
-for column in columns_to_process:
-    mask = df[column].apply(lambda x: has_multiple_dots(x))
-    fdf = df[~mask].copy()  # Create a copy of the filtered DataFrame
-    
-    fdf.loc[:, column] = fdf[column].astype(float)
-    # Update the original DataFrame with the processed values
-    df.loc[fdf.index, column] = fdf[column]
+df=pd.read_excel('Data/DataSet.xlsx')
+
+#Earthquake Resistant
+#Parking
+#Drinking Water
+#Parquet
+
+for index,rows in df.iterrows():
+    newval=rows["AMENITIES"].split(',')
+    df.at[index,"AMENROW"]=newval
+
+wb_p="Data/DataSet.xlsx"
+workbook=load_workbook(wb_p)
+workbook.create_sheet('amenities')
+
+sheet=workbook['new']
+filtercol=['AMENROW']
+
+#create a new sheet and save data to it
+for col_index,column in enumerate(filtercol,start=1):
+    sheet.cell(row=1,column=col_index,value=column)
+    for row_idx,value in enumerate(df[column],start=2):
+        sheet.cell(row=row_idx,column=col_index,value=value)
+
+workbook.save(wb_p)
